@@ -1,0 +1,12 @@
+.App {
+  text-align: center;
+}
+
+
+@font-face {
+  font-family: "JostMedium";
+  src: url("./Assets/font/Jost-Medium.ttf");
+  font-weight: bold !important;
+}
+
+
