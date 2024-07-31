@@ -12,11 +12,13 @@
     "react-router-dom": "^6.25.1",
     "react-scripts": "5.0.1",
     "socket.io-client": "^4.7.5",
+    "sweetalert2": "^11.12.3",
+    "sweetalert2-react-content": "^5.0.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build", 
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
