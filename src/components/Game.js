@@ -5,22 +5,24 @@ import "../App.css";
 import { lobbyStyle } from "../pageStyle";
 import { socket } from "../Auth/env";
 
-
 function Game() {
   const navigate = useNavigate();
   const { roomId } = useParams();
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [seconds, setSeconds] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const getName = localStorage.getItem("Name");
 
   useEffect(() => {
     socket.emit("startGame", roomId);
+    setLoading(true);
 
     socket.on("question", (question) => {
       setQuestion(question);
       setSeconds(15);
+      setLoading(false);
     });
 
     socket.on("navigateToResult", (roomId) => {
@@ -31,7 +33,7 @@ function Game() {
     return () => {
       socket.off("question");
       socket.off("gameOver");
-      socket.off('navigateToResult')
+      socket.off("navigateToResult");
     };
   }, [roomId, navigate]);
 
@@ -46,51 +48,51 @@ function Game() {
     }
   }, [seconds]);
 
- 
   const submitAnswer = () => {
     socket.emit("answer", roomId, answer, getName);
     setAnswer("");
+    setLoading(true);
   };
 
   return (
     <div>
-       <div
-      className="d-flex justify-content-center align-items-center vh-100 p-3 p-md-5"
-      style={{
-        backgroundImage: `url(${black})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        fontFamily: "JostMedium",
-      }}
-    >
-      <div style={lobbyStyle.container}>
-        <h1>QUIZ GAME</h1>
-        <br /> <br />
-        <>
-        <h1>{question}</h1>
-        <h2>Time left: {seconds} seconds</h2>
-        <input
-          type="text"
-          className="form-control"
-          value={answer}
-          onChange={(e) => setAnswer(e.target.value)}
-          placeholder="Your answer"
-        />
-        <br/>
-        {/* <button className="btn bt-primary"  type="button" onClick={submitAnswer}>Submit Answer</button> */}
-        <button
-          className="btn btn-primary m-2"
-          style={lobbyStyle.button}
-          onClick={submitAnswer}
-        >
-         Submit Answer
-        </button>
-      </>
-       
-      
+      <div
+        className="d-flex justify-content-center align-items-center vh-100 p-3 p-md-5"
+        style={{
+          backgroundImage: `url(${black})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          fontFamily: "JostMedium",
+        }}
+      >
+        <div style={lobbyStyle.container}>
+          <h1>QUIZ GAME</h1>
+          <br /> <br />
+          {loading ? (
+            <h2>Loading...</h2>
+          ) : (
+            <>
+              <h1>{question}</h1>
+              <h2>Time left: {seconds} seconds</h2>
+              <input
+                type="text"
+                className="form-control"
+                value={answer}
+                onChange={(e) => setAnswer(e.target.value)}
+                placeholder="Your answer"
+              />
+              <br />
+              <button
+                className="btn btn-primary m-2"
+                style={lobbyStyle.button}
+                onClick={submitAnswer}
+              >
+                Submit Answer
+              </button>
+            </>
+          )}
+        </div>
       </div>
-    </div>
-     
     </div>
   );
 }

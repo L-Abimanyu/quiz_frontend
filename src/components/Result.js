@@ -5,17 +5,18 @@ import "../App.css";
 import { lobbyStyle } from "../pageStyle";
 import { socket } from "../Auth/env";
 
-
 function Result() {
   const navigate = useNavigate();
   const { roomId } = useParams();
   const [scores, setScores] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     socket.emit("getUserScores", roomId);
 
     socket.on("userScores", (result) => {
       setScores(result.scores);
+      setLoading(false);
     });
 
     return () => {
@@ -23,8 +24,6 @@ function Result() {
       socket.off("userScores");
     };
   }, [roomId]);
-
-
 
   const getMaxScoreUser = (scores) => {
     let maxUser = null;
@@ -37,7 +36,6 @@ function Result() {
     }
     return maxUser;
   };
-
 
   const maxScoreUser = getMaxScoreUser(scores);
 
@@ -57,37 +55,48 @@ function Result() {
       }}
     >
       <div style={lobbyStyle.container}>
-      <h1>Game Over</h1>
-      <br/>
-      <h2>Scores</h2>
-    <br/>
-      <ul style={{listStyleType:"none"}}>
-        {Object.entries(scores).map(([user, score]) => (
-          <li key={user} style={{fontSize:"30px" , marginTop:"5px" , marginLeft:"-20px"}}>
-            {user}: {score}
-            &emsp;
-            {user === maxScoreUser ? (
-                <span style={{ color: "green" }}>Congrats!</span>
-              ) : (
-                <span style={{ color: "red" }}>Better luck next time</span>
-              )}
-          </li>
-        ))}
-      </ul>
+        {loading ? (
+          <h2>Loading...</h2> // Display loading indicator while loading
+        ) : (
+          <>
+            <h1>Game Over</h1>
+            <br />
+            <h2>Scores</h2>
+            <br />
+            <ul style={{ listStyleType: "none" }}>
+              {Object.entries(scores).map(([user, score]) => (
+                <li
+                  key={user}
+                  style={{
+                    fontSize: "30px",
+                    marginTop: "5px",
+                    marginLeft: "-20px",
+                  }}
+                >
+                  {user}: {score}
+                  &emsp;
+                  {user === maxScoreUser ? (
+                    <span style={{ color: "green" }}>Congrats!</span>
+                  ) : (
+                    <span style={{ color: "red" }}>Better luck next time</span>
+                  )}
+                </li>
+              ))}
+            </ul>
 
-      <button
-        type="button"
-        className="btn btn-primary"
-        onClick={() => {
-          handleOk();
-        }}
-        style={lobbyStyle.button}
-      >
-       EXIT
-      </button>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => {
+                handleOk();
+              }}
+              style={lobbyStyle.button}
+            >
+              EXIT
+            </button>
+          </>
+        )}
       </div>
-      
-     
     </div>
   );
 }
