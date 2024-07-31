@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import io from "socket.io-client";
 import { useNavigate, useParams } from "react-router-dom";
 import black from "../Assets/black.jpg";
 import "../App.css";
@@ -12,8 +11,6 @@ function Game() {
   const { roomId } = useParams();
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
-  const [gameStarted, setGameStarted] = useState(false);
-  const [scores, setScores] = useState({});
   const [seconds, setSeconds] = useState(0);
 
   const getName = localStorage.getItem("Name");

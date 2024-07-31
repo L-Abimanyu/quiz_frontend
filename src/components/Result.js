@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import io from "socket.io-client";
 import { useNavigate, useParams } from "react-router-dom";
 import black from "../Assets/black.jpg";
 import "../App.css";
