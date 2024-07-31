@@ -9,8 +9,6 @@ import { socket } from "../Auth/env";
 
 
 
-// const  socket = io('https://quiz-backend-1-5cq2.onrender.com:8000')
-
 function Lobby() {
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
@@ -29,6 +27,9 @@ function Lobby() {
         icon: "error",
         confirmButtonText: "Ok",
       });
+ 
+      console.log(message);
+
     });
 
     socket.on("navigateToGame", (roomId) => {
