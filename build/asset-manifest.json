@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.2264837e.css",
+    "main.js": "/static/js/main.c447e129.js",
+    "static/js/453.8ab44547.chunk.js": "/static/js/453.8ab44547.chunk.js",
+    "static/media/black.jpg": "/static/media/black.35f8b20b001b7b3a8ba4.jpg",
+    "static/media/Jost-Medium.ttf": "/static/media/Jost-Medium.6b59eccdfbb145802814.ttf",
+    "index.html": "/index.html",
+    "main.2264837e.css.map": "/static/css/main.2264837e.css.map",
+    "main.c447e129.js.map": "/static/js/main.c447e129.js.map",
+    "453.8ab44547.chunk.js.map": "/static/js/453.8ab44547.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2264837e.css",
+    "static/js/main.c447e129.js"
+  ]
+}
